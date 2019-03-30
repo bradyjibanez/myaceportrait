@@ -5,6 +5,26 @@ from django.contrib.auth.forms import UserCreationForm
 
 from main.models import UserProfile, ProspectProfile, ProspectCodeSnippet, ProspectEducation, ProspectExperience
 
+class RegistrationForm(UserCreationForm):
+	first_name = forms.CharField(max_length=30, required=False)
+	last_name = forms.CharField(max_length=30, required=False)
+	email = forms.EmailField(max_length=254, help_text='Required')
+
+	class Meta:
+		model = User
+		fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+
+	def __init__(self, *args, **kwargs):
+		super(RegistrationForm, self).__init__(*args, **kwargs)
+		for field in self.fields:
+			self.fields[field].widget.attrs['class'] = 'col-8'
+
+class UserProfileForm(forms.ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ['user_type']
+		exclude = ['user']
+
 class ProspectProfileForm(forms.ModelForm):
 	bio = forms.CharField(max_length=10000, widget=forms.Textarea)
 	class Meta:
@@ -28,5 +48,5 @@ class ProspectEducationForm(forms.ModelForm):
 class ProspectExperienceForm(forms.ModelForm):
 	class Meta:
 		model = ProspectExperience
-		fields = ['name', 'work_type', 'location', 'start_date', 'end_date']
+		fields = ['name', 'position', 'work_type', 'location', 'start_date', 'end_date']
 		exclude = ['prospect', 'date_created']

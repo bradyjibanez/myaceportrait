@@ -61,6 +61,7 @@ class ProspectExperience(models.Model):
 
 	prospect = models.ForeignKey(User, on_delete=models.CASCADE)
 	date_created = models.DateTimeField(auto_now_add=True)
+	position = models.CharField(max_length=100)
 	work_type = models.CharField(max_length=20, choices=TYPE)
 	name = models.CharField(max_length=250)
 	location = models.CharField(max_length=250)
