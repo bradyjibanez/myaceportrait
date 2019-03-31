@@ -17,7 +17,7 @@ class RegistrationForm(UserCreationForm):
 	def __init__(self, *args, **kwargs):
 		super(RegistrationForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
-			self.fields[field].widget.attrs['class'] = 'col-8'
+			self.fields[field].widget.attrs['class'] = 'col-8 form-control'
 
 class UserProfileForm(forms.ModelForm):
 	class Meta:
@@ -28,7 +28,7 @@ class UserProfileForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(UserProfileForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
-			 self.fields[field].widget.attrs['class'] = 'col-8'
+			 self.fields[field].widget.attrs['class'] = 'col-8 form-control'
 
 class ProspectProfileForm(forms.ModelForm):
 	bio = forms.CharField(max_length=10000, widget=forms.Textarea)
@@ -40,7 +40,7 @@ class ProspectProfileForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(ProspectProfileForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
-			self.fields[field].widget.attrs['class'] = 'col-8'
+			self.fields[field].widget.attrs['class'] = 'col-8 form-control'
 
 class ProspectCodeSnippetForm(forms.ModelForm):
 	snippet_code = forms.CharField(max_length=10000, widget=forms.Textarea)
@@ -52,7 +52,7 @@ class ProspectCodeSnippetForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(ProspectCodeSnippetForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
-			self.fields[field].widget.attrs['class'] = 'col-8'
+			self.fields[field].widget.attrs['class'] = 'col-8 form-control'
 
 class ProspectEducationForm(forms.ModelForm):
 	class Meta:
@@ -63,7 +63,7 @@ class ProspectEducationForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(ProspectEducationForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
-			self.fields[field].widget.attrs['class'] = 'col-8'
+			self.fields[field].widget.attrs['class'] = 'col-8 form-control'
 
 class ProspectExperienceForm(forms.ModelForm):
 	class Meta:
@@ -74,4 +74,12 @@ class ProspectExperienceForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(ProspectExperienceForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
-			self.fields[field].widget.attrs['class'] = 'col-8'
+			self.fields[field].widget.attrs['class'] = 'col-8 form-control'
+
+class ContactForm(forms.Form):
+    message = forms.CharField(max_length=10000, widget=forms.Textarea)
+	
+	def __init__(self, *args, **kwargs):
+		super(ProspectExperienceForm, self).__init__(*args, **kwargs)
+		for field in self.fields:
+			self.fields[field].widget.attrs['class'] = 'col-8 form-control'
