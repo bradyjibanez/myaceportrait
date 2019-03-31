@@ -107,7 +107,7 @@ def prospect_home(request):
 			try:
 				profile = ProspectProfile.objects.get(prospect=request.user)
 			except ProspectProfile.DoesNotExist:
-				return redirect('prospect_add_profile')
+				return redirect('/p/profile/create')
 			snippets = ProspectCodeSnippet.objects.filter(prospect=request.user).order_by('-date_created')
 			education = ProspectEducation.objects.filter(prospect=request.user).order_by('-date_created')
 			experience = ProspectExperience.objects.filter(prospect=request.user).order_by('-date_created')
@@ -130,9 +130,9 @@ def prospect_add_profile(request):
 					form = form.save(commit=False)
 					form.prospect = request.user
 					form.save()
-					return redirect('propsect_home')
+					return redirect('prospect_home')
 			else:
-				form = PropsectProfileForm()
+				form = ProspectProfileForm()
 			context = {
 				'form': form
 			}
@@ -142,7 +142,19 @@ def prospect_add_profile(request):
 def prospect_edit_profile(request):
 	if request.user.is_authenticated:
 		is_classified(request)
-		pass
+		if not is_hunter(request):
+			profile = ProspectProfile.objects.get(prospect=request.user)
+			if request.method == 'POST':
+				form = ProspectProfileForm(request.POST, instance=profile)
+				if form.is_valid():
+					form.save()
+					return redirect('prospect_home')
+			else:
+				form = ProspectProfileForm(instance=profile)
+			context =  {
+				'form': form
+			}
+			return render(request, 'main/prospect/add_profile.html', context)
 
 def prospect_add_snippet(request):
 	if request.user.is_authenticated:
