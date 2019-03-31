@@ -19,9 +19,11 @@ def is_hunter(request):
 
 # Generic Views
 def landing(request):
-	if not UserProfile.objects.get(user=request.user).exists():
-		return redirect('choose_type')
 	if request.user.is_authenticated:
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
 		if is_hunter(request):
 			return redirect('hunter_home')
 		else:
@@ -31,9 +33,10 @@ def landing(request):
 def choose_type(request):
 	if request.user.is_authenticated:
 		if request.method == 'POST':
-			form = UserProfileForm(request.data)
-			form.user = request.user
+			form = UserProfileForm(request.POST)
 			if form.is_valid():
+				form = form.save(commit=False)
+				form.user = request.user
 				form.save()
 				return redirect('landing')
 		else:
@@ -41,7 +44,7 @@ def choose_type(request):
 		context = {
 			'form': form
 		}
-		return render(request, 'main/choose_type.html', context)
+		return render(request, 'registration/choose_type.html', context)
 	return redirect('landing')
 
 def signup(request):
@@ -60,8 +63,12 @@ def signup(request):
 
 # Hunter Views
 def hunter_home(request):
-	is_classified(request)
 	if request.user.is_authenticated:
+		is_classified(request)
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
 		if is_hunter(request):
 			prospects = UserProfile.objects.filter(user_type="PROSPECT")
 			prospect_profiles = ProspectProfile.objects.all()
@@ -73,8 +80,12 @@ def hunter_home(request):
 	return redirect('landing')
 
 def hunter_view(request, prospect=None):
-	is_classified(request)
 	if request.user.is_authenticated:
+		is_classified(request)
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
 		if is_hunter(request):
 			user = User.objects.get(pk=prospect)
 			prospect = ProspectProfile.objects.get(prospect=user)
@@ -91,13 +102,18 @@ def hunter_view(request, prospect=None):
 	return redirect('landing')
 
 def hunter_message(request):
-	is_classified(request)
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass
 
 # Huntee Views
 def prospect_home(request):
-	is_classified(request)
 	if request.user.is_authenticated:
+		is_classified(request)
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
 		if not is_hunter(request):
 			profile = ProspectProfile.objects.get(prospect=request.user)
 			snippets = ProspectCodeSnippet.objects.filter(prospect=request.user).order_by('-date_created')
@@ -113,16 +129,23 @@ def prospect_home(request):
 	return redirect('landing')
 
 def prospect_edit_profile(request):
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass
 
 def prospect_add_snippet(request):
-	is_classified(request)
 	if request.user.is_authenticated:
+		is_classified(request)
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
 		if not is_hunter(request):
 			if request.method == 'POST':
 				form = ProspectCodeSnippetForm(request.POST)
-				form.prospect = request.user
 				if form.is_valid():
+					form = form.save(commit=False)
+					form.prospect = request.user
 					form.save()
 					return redirect('prospect_home')
 			else:
@@ -134,8 +157,12 @@ def prospect_add_snippet(request):
 	return redirect('landing')
 
 def prospect_edit_snippet(request, snippet=None):
-	is_classified(request)
 	if request.user.is_authenticated:
+		is_classified(request)
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
 		if not is_hunter(request):
 			snippet = ProspectCodeSnippet.objects.get(pk=snippet)
 			if request.method == 'POST':
@@ -152,26 +179,42 @@ def prospect_edit_snippet(request, snippet=None):
 	return redirect('landing')
 
 def prospect_remove_snippet(request, snippet=None):
-	is_classified(request)
 	if request.user.is_authenticated:
+		is_classified(request)
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
 		ProspectCodeSnippet.objects.get(pk=snippet).delete()
 		return redirect('prospect_home')
 	return redirect('landing')
 
 def prospect_add_education(request):
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass
 
 def prospect_edit_education(request):
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass
 
 def prospect_remove_education(request):
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass
 
 def prospect_add_experience(request):
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass
 
 def prospect_edit_experience(request):
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass
 
 def prospect_remove_experience(request):
-	pass
+	if request.user.is_authenticated:
+		is_classified(request)
+		pass

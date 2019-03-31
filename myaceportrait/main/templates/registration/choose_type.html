@@ -1,0 +1,20 @@
+{% include 'main/components/header.html' %}
+
+{% include 'main/components/hunter-navbar.html' %}
+
+<div class="container my-3 h-75">
+	<div class="row">
+		<div class="col-12">
+			<h3>User Type</h3>
+			<p>Select the type of user you will be classified as</p>
+			<form method="POST">
+				{% csrf_token %}
+				<div class="form-group form-row">
+					<label>Type: </label>
+					{{ form.user_type }}
+				</div>
+				<button type="submit" class="btn btn-dark text-light">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
