@@ -28,7 +28,8 @@ def landing(request):
 			return redirect('hunter_home')
 		else:
 			return redirect('prospect_home')
-	return render(request, 'main/landing.html')
+	else:
+		return render(request, 'main/landing.html')
 
 def choose_type(request):
 	if request.user.is_authenticated:
