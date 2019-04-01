@@ -216,7 +216,7 @@ def prospect_remove_snippet(request, snippet=None):
 	if request.user.is_authenticated:
 		is_classified(request)
 		snippet = ProspectCodeSnippet.objects.get(pk=snippet)
-		if snippet.prospect = request.user:
+		if snippet.prospect == request.user:
 			ProspectCodeSnippet.objects.get(pk=snippet).delete()
 		return redirect('prospect_home')
 	return redirect('landing')

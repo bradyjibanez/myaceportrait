@@ -18,7 +18,7 @@ urlpatterns = [
 	# Prospect Education
 	path('p/education/add', views.prospect_add_education, name='prospect_add_education'),
 	path('p/education/edit/<int:education>', views.prospect_edit_education, name='prospect_edit_education'),
-	path('p/education/remove/<int:education>', view.prospect_remove_education, name='prospect_remove_education'),
+	path('p/education/remove/<int:education>', views.prospect_remove_education, name='prospect_remove_education'),
 	# Prospect Experience
 	path('p/experience/add', views.prospect_add_experience, name='prospect_add_experience'),
 	path('p/experience/edit/<int:experience>', views.prospect_edit_experience, name='prospect_edit_experience'),
