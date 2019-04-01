@@ -80,6 +80,6 @@ class ContactForm(forms.Form):
 	message = forms.CharField(max_length=10000, widget=forms.Textarea)
 
 	def __init__(self, *args, **kwargs):
-		super(ProspectExperienceForm, self).__init__(*args, **kwargs)
+		super(ContactForm, self).__init__(*args, **kwargs)
 		for field in self.fields:
 			self.fields[field].widget.attrs['class'] = 'col-8 form-control'

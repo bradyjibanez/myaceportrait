@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 
 from main.models import *
 from main.forms import *
@@ -94,7 +95,7 @@ def hunter_view(request, prospect=None):
 			return render(request, 'main/hunter/prospect.html', context)
 	return redirect('landing')
 
-def hunter_message(request, propsect=None):
+def hunter_message(request, prospect=None):
 	if request.user.is_authenticated:
 		is_classified(request)
 		if is_hunter(request):
@@ -103,13 +104,14 @@ def hunter_message(request, propsect=None):
 				if form.is_valid():
 					data = form.cleaned_data
 					
-					subject = 'myACEportrait - Message from '+request.user.username
+					subject = 'myACEportrait - Message from '+str(request.user.username)
 					message = data['message']
-					from_email = request.user.email
+					from_email = str(request.user.email)
 					prospect = User.objects.get(pk=prospect)
-					recipients = [prospect]
+					recipients = [prospect.email]
 					
 					send_mail(subject, message, from_email, recipients, fail_silently=False)
+					return redirect('hunter_home')
 			else:
 				form = ContactForm()
 			context = {
