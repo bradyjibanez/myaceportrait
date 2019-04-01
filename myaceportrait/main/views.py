@@ -286,7 +286,7 @@ def prospect_add_experience(request):
 			context = {
 				'form': form
 			}
-			return render(request, 'main/prospect/add_education.html', context)
+			return render(request, 'main/prospect/add_experience.html', context)
 	return redirect('landing')
 
 def prospect_edit_experience(request, experience=None):
@@ -307,7 +307,7 @@ def prospect_edit_experience(request, experience=None):
 				context = {
 					'form': form
 				}
-				return render(request, 'main/prospect/add_education.html', context)
+				return render(request, 'main/prospect/add_experience.html', context)
 	return redirect('landing')
 
 def prospect_remove_experience(request, experience=None):
