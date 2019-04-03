@@ -19,7 +19,8 @@ class ProspectProfile(models.Model):
 	prospect = models.OneToOneField(User, on_delete=models.CASCADE)
 	github = models.CharField(max_length=100, blank=True, null=True)
 	bio = models.CharField(max_length=10000, blank=True, null=True)
-
+	skills = models.CharField(max_length=10000, blank=True, null=True)
+	
 	def __str__(self):
 		return self.prospect.username
 

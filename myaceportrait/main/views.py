@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-
+from django.views.generic import ListView
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
@@ -20,18 +21,17 @@ def is_hunter(request):
 
 # Generic Views
 def landing(request):
-	#if request.user.is_authenticated:
-	try:
-		print("SO CLOSE")
-		UserProfile.objects.get(user=request.user)
-	except UserProfile.DoesNotExist:
-		return redirect ('choose_type')
-	if is_hunter(request):
-		return redirect('hunter_home')
+	if request.user.is_authenticated:
+		try:
+			UserProfile.objects.get(user=request.user)
+		except UserProfile.DoesNotExist:
+			return redirect ('choose_type')
+		if is_hunter(request):
+			return redirect('hunter_home')
+		else:
+			return redirect('prospect_home')
 	else:
-		return redirect('prospect_home')
-#	else:
-	return render(request, 'main/landing.html')
+		return render(request, 'main/landing.html')
 
 def choose_type(request):
 	if request.user.is_authenticated:
@@ -66,14 +66,24 @@ def signup(request):
 
 # Hunter Views
 def hunter_home(request):
+	search_term=''
 	if request.user.is_authenticated:
 		is_classified(request)
 		if is_hunter(request):
 			prospects = UserProfile.objects.filter(user_type="PROSPECT")
 			prospect_profiles = ProspectProfile.objects.all()
+			if 'search' in request.GET:
+				search_term = request.GET['search']
+				if search_term != '':
+					prospect_profiles = ProspectProfile.objects.filter(Q(prospect__username__icontains=search_term) 
+						| Q(bio__icontains=search_term) | Q(skills__icontains=search_term))
+			else:
+				prospect_profiles = ProspectProfile.objects.all()
+
 			context = {
 				'prospects': prospects,
-				'prospect_profiles': prospect_profiles
+				'prospect_profiles': prospect_profiles,
+				'search_term': search_term
 			}
 			return render(request, 'main/hunter/home.html', context)
 	return redirect('landing')

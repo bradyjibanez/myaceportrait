@@ -32,9 +32,10 @@ class UserProfileForm(forms.ModelForm):
 
 class ProspectProfileForm(forms.ModelForm):
 	bio = forms.CharField(max_length=10000, widget=forms.Textarea)
+	skills = forms.CharField(max_length=10000, widget=forms.Textarea)
 	class Meta:
 		model = ProspectProfile
-		fields = ['github', 'bio']
+		fields = ['github', 'bio', 'skills']
 		exclude = ['prospect']
 
 	def __init__(self, *args, **kwargs):
