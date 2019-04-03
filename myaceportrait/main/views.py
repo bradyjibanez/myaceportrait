@@ -20,17 +20,18 @@ def is_hunter(request):
 
 # Generic Views
 def landing(request):
-	if request.user.is_authenticated:
-		try:
-			UserProfile.objects.get(user=request.user)
-		except UserProfile.DoesNotExist:
-			return redirect ('choose_type')
-		if is_hunter(request):
-			return redirect('hunter_home')
-		else:
-			return redirect('prospect_home')
+	#if request.user.is_authenticated:
+	try:
+		print("SO CLOSE")
+		UserProfile.objects.get(user=request.user)
+	except UserProfile.DoesNotExist:
+		return redirect ('choose_type')
+	if is_hunter(request):
+		return redirect('hunter_home')
 	else:
-		return render(request, 'main/landing.html')
+		return redirect('prospect_home')
+#	else:
+	return render(request, 'main/landing.html')
 
 def choose_type(request):
 	if request.user.is_authenticated:
