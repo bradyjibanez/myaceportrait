@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/howto/deployment/wsgi/
 
 import os, sys
 
-path = '/root/myACEportrait/'
+path = '/root/myACEportrait/myaceportrait'
 if path not in sys.path:
         sys.path.append(path)
 
