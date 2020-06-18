@@ -25,7 +25,7 @@ SECRET_KEY = '@&+%g1(9#l71%sw$olc=emjs2#2qbl*b+55@@b#_)1aqf8xzn+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'myaceportrait.tk', '165.22.233.130']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'myaceportrait.tk', '68.183.114.106']
 
 
 # Application definition
