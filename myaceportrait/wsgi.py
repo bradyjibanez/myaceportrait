@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/2.1/howto/deployment/wsgi/
 import os, sys
 from django.core.wsgi import get_wsgi_application
 
-path = '/webapps/chatter/myACEportrait/myaceportrait'
+path = '/root/myACEportrait/myaceportrait'
 if path not in sys.path:
         sys.path.append(path)
 
