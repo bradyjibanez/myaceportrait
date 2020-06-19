@@ -25,7 +25,7 @@ SECRET_KEY = '@&+%g1(9#l71%sw$olc=emjs2#2qbl*b+55@@b#_)1aqf8xzn+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'myaceportrait.tk', '68.183.114.106']
+ALLOWED_HOSTS = ['68.183.193.117', 'portfolioVM']
 
 
 # Application definition
@@ -125,11 +125,11 @@ EMAIL_HOST_PASSWORD = 'django123!'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
+#SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/'
